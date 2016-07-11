@@ -1,0 +1,14 @@
+/*
+Theme Name: My_theme
+Theme URI: http://my_wp.loc/
+Author: Oleh Kopytsia
+Description: 2016
+Version: 1.5
+Tags:
+*/
+
+.cubee {
+  height: 50px;
+  width: 50px;
+  background: red;
+}
