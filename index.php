@@ -19,7 +19,7 @@
   <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
     <h3><?php the_title(); ?></h3>
-    <?php the_excerpt(); ?>
+    <?php the_content(); ?>
     <a href="<?php the_permalink(); ?>">Читать далее...</a>
 
   <?php endwhile; ?>
@@ -31,7 +31,7 @@
 <br />
 <br />
 <hr>
-  
+
   <?php get_sidebar( 'sidebar' ); ?>
 
 <br />
