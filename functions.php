@@ -34,16 +34,16 @@ register_sidebar(array(
  * Удаление пунктов меню
  **/
 function remove_menus(){
-remove_menu_page( 'index.php' );                  //Консоль
+//remove_menu_page( 'index.php' );                  //Консоль
 //remove_menu_page( 'edit.php' );                   //Записи
-remove_menu_page( 'upload.php' );                 //Медиафайлы
-remove_menu_page( 'edit.php?post_type=page' );    //Страницы
-remove_menu_page( 'edit-comments.php' );          //Комментарии
-remove_menu_page( 'themes.php' );                 //Внешний вид
+//remove_menu_page( 'upload.php' );                 //Медиафайлы
+//remove_menu_page( 'edit.php?post_type=page' );    //Страницы
+//remove_menu_page( 'edit-comments.php' );          //Комментарии
+//remove_menu_page( 'themes.php' );                 //Внешний вид
 //remove_menu_page( 'plugins.php' );                //Плагины
-remove_menu_page( 'users.php' );                  //Пользователи
-remove_menu_page( 'tools.php' );                  //Инструменты
-remove_menu_page( 'options-general.php' );        //Настройки
+//remove_menu_page( 'users.php' );                  //Пользователи
+//remove_menu_page( 'tools.php' );                  //Инструменты
+//remove_menu_page( 'options-general.php' );        //Настройки
 }
 add_action( 'admin_menu', 'remove_menus' );
 
@@ -91,5 +91,83 @@ wp_clear_scheduled_hook('wp_update_themes');
 
 
 
+/**
+ *	Custom Post Types start
+ **/
+add_action('init', 'create_post_type');
+function create_post_type()
+{
+	$labels = array(
+		'name' => __( 'Кастом пост тайп' ),
+		'singular_name' => __( 'Кастом пост тайп' ),
+	);
+	$args = array(
+		'labels' => $labels,
+		'public' => true,
+		'has_archive' => true,
+	);
+	register_post_type('description_products', $args);
+}
+
+function create_shortcode()
+{
+	$args = array(
+		'post_type' => 'description_products'
+	);
+	$posts = get_posts($args);
+
+	$a = array();
+	$i = 0;
+	foreach ($posts as $post) {
+//    echo $post->ID . '<br>';
+//    echo $post->post_title . '<br>';
+//    echo $post->post_content . '<br>';
+//    add_shortcode( $post->ID, 'shortcode' );
+		$a[$i] = $post->post_content;
+		$i++;
+	}
+	return $a;
+}
+add_shortcode('producttt1', 'create_shortcode');
+
+
+function dsdf()
+{
+	$args = array(
+		'post' => '',
+	);
+	$pro = new WP_Query($args);
+	print_r($pro);
+	echo '<br>';
+	if ($pro->have_posts()) {
+		while ($pro->have_posts()) {
+			$pro->the_post();
+			the_ID();
+			echo '<br>';
+		}
+	}
+}
+add_action('wp_footer', 'dsdf');
+
+//№2 this Получить и удалить
+function ds()
+{
+	$mycustomposts = get_posts(array('post_type' => 'products'));
+//	var_dump($mycustomposts);
+	echo '<pre>';
+	print_r($mycustomposts);
+	echo '</pre>';
+	foreach( $mycustomposts as $mypost ) {
+//		wp_delete_post($mypost->ID, true);
+//		echo $mypost->post_content;
+//		function pro(){  }
+//		add_shortcode( 'product-'.$mypost->ID, 'pro' );
+	}
+}
+//add_action( 'wp_footer', 'ds' );
+//add_filter( 'the_editor', 'sss' );
+/**
+*	Custom Post Types end
+**/
 
 ?>
