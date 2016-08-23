@@ -110,28 +110,39 @@ function create_post_type()
 	register_post_type('description_products', $args);
 }
 
-/* 0 Вывод пользовательской записи*/
-function create_shortcode()
+/* 0 Создание шорткодов всех пользовательских записей*/
+function id_content_post_type()
 {
+
+	function expanded_id( $arg ){
+		$id = $arg;
+		return $id;
+	}
+
 	$args = array(
 		'post_type' => 'description_products'
 	);
 	$posts = get_posts($args);
 
-	$a = array();
+	$whole_array = array();
 	$i = 0;
 	foreach ($posts as $post) {
-    echo $post->ID . '<br>';
-    echo $post->post_title . '<br>';
-    echo $post->post_content . '<br>';
+//    echo $post->ID . '<br>';
+//    echo $post->post_title . '<br>';
+//    echo $post->post_content . '<br>';
 //    add_shortcode( $post->ID, 'shortcode' );
-//		$a[$i] = $post->post_content;
-//		$i++;
+		$whole_array['id'][$i] = $post->ID;
+		$whole_array['content'][$i] = $post->post_content;
+
+		expanded_id($whole_array['content'][$i]);
+
+		add_shortcode( 'my-product-id-' . $whole_array['id'][$i], 'expanded_id' );
+		$i++;
 	}
-//	return $a;
+	return $whole_array;
 }
-//add_action('wp_footer', 'create_shortcode');
-//add_shortcode('producttt1', 'create_shortcode');
+id_content_post_type();
+
 
 /* 1 Получить и удалить пост*/
 function dsdf()
@@ -183,7 +194,7 @@ function aa(){
 	echo "<pre>"; print_r($shortcode_tags); echo "</pre>";
 }
 //remove_shortcode('producttt1');
-//add_action('wp_footer', 'aa');
+add_action('wp_footer', 'aa');
 /**
  *	Просмотр и удаление шорткодов
  **/
