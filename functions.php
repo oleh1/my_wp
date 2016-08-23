@@ -139,7 +139,6 @@ function id_content_post_type()
 		add_shortcode( 'my-product-id-' . $whole_array['id'][$i], 'expanded_id' );
 		$i++;
 	}
-	return $whole_array;
 }
 id_content_post_type();
 
