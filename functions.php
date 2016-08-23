@@ -48,7 +48,7 @@ function remove_menus(){
 add_action( 'admin_menu', 'remove_menus' );
 
 
-//удаление из панели элементов меню - начало
+/*удаление из панели элементов меню - начало*/
 function wph_new_toolbar() {
 global $wp_admin_bar;
 
@@ -61,7 +61,7 @@ global $wp_admin_bar;
 //	$wp_admin_bar->remove_menu('site-name'); //меню "сайт"
 }
 add_action('wp_before_admin_bar_render', 'wph_new_toolbar');
-//удаление из панели элементов меню – конец
+/*удаление из панели элементов меню – конец*/
 
 
 
@@ -75,16 +75,16 @@ add_filter( 'auto_update_core', '__return_false' );
 /**
  *	Запретить автоматичиское обновление
  **/
-//Запрет обновления Вордпресс
+/*Запрет обновления Вордпресс*/
 add_filter('pre_site_transient_update_core',create_function('$a', "return null;"));
 wp_clear_scheduled_hook('wp_version_check');
 
-//Запрет обновления плагинов
+/*Запрет обновления плагинов*/
 remove_action( 'load-update-core.php', 'wp_update_plugins' );
 add_filter( 'pre_site_transient_update_plugins', create_function( '$a', "return null;" ) );
 wp_clear_scheduled_hook( 'wp_update_plugins' );
 
-//Запрет обновления шаблонов
+/*Запрет обновления шаблонов*/
 remove_action('load-update-core.php','wp_update_themes');
 add_filter('pre_site_transient_update_themes',create_function('$a', "return null;"));
 wp_clear_scheduled_hook('wp_update_themes');
@@ -94,6 +94,7 @@ wp_clear_scheduled_hook('wp_update_themes');
 /**
  *	Custom Post Types start
  **/
+/*Создание пользовательской записи*/
 add_action('init', 'create_post_type');
 function create_post_type()
 {
@@ -109,6 +110,7 @@ function create_post_type()
 	register_post_type('description_products', $args);
 }
 
+/* 0 Вывод пользовательской записи*/
 function create_shortcode()
 {
 	$args = array(
@@ -119,18 +121,19 @@ function create_shortcode()
 	$a = array();
 	$i = 0;
 	foreach ($posts as $post) {
-//    echo $post->ID . '<br>';
-//    echo $post->post_title . '<br>';
-//    echo $post->post_content . '<br>';
+    echo $post->ID . '<br>';
+    echo $post->post_title . '<br>';
+    echo $post->post_content . '<br>';
 //    add_shortcode( $post->ID, 'shortcode' );
-		$a[$i] = $post->post_content;
-		$i++;
+//		$a[$i] = $post->post_content;
+//		$i++;
 	}
-	return $a;
+//	return $a;
 }
-add_shortcode('producttt1', 'create_shortcode');
+//add_action('wp_footer', 'create_shortcode');
+//add_shortcode('producttt1', 'create_shortcode');
 
-
+/* 1 Получить и удалить пост*/
 function dsdf()
 {
 	$args = array(
@@ -149,11 +152,12 @@ function dsdf()
 }
 //add_action('wp_footer', 'dsdf');
 
-//№2 this Получить и удалить
+/* 2 Получить и удалить пост*/
 function ds()
 {
-	$mycustomposts = get_posts(array('post_type' => 'products'));
-//	var_dump($mycustomposts);
+	$mycustomposts = get_post_types();
+//	$mycustomposts = get_posts();
+//	$mycustomposts = get_post();
 	echo '<pre>';
 	print_r($mycustomposts);
 	echo '</pre>';
@@ -165,10 +169,11 @@ function ds()
 	}
 }
 //add_action( 'wp_footer', 'ds' );
-//add_filter( 'the_editor', 'sss' );
 /**
 *	Custom Post Types end
 **/
+
+
 
 /**
  *	Просмотр и удаление шорткодов
@@ -177,8 +182,8 @@ function aa(){
 	global $shortcode_tags;
 	echo "<pre>"; print_r($shortcode_tags); echo "</pre>";
 }
-remove_shortcode('producttt1');
-add_action('wp_footer', 'aa');
+//remove_shortcode('producttt1');
+//add_action('wp_footer', 'aa');
 /**
  *	Просмотр и удаление шорткодов
  **/
