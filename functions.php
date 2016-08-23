@@ -147,7 +147,7 @@ function dsdf()
 		}
 	}
 }
-add_action('wp_footer', 'dsdf');
+//add_action('wp_footer', 'dsdf');
 
 //№2 this Получить и удалить
 function ds()
@@ -169,5 +169,18 @@ function ds()
 /**
 *	Custom Post Types end
 **/
+
+/**
+ *	Просмотр и удаление шорткодов
+ **/
+function aa(){
+	global $shortcode_tags;
+	echo "<pre>"; print_r($shortcode_tags); echo "</pre>";
+}
+remove_shortcode('producttt1');
+add_action('wp_footer', 'aa');
+/**
+ *	Просмотр и удаление шорткодов
+ **/
 
 ?>
