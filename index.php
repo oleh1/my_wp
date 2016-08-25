@@ -44,15 +44,11 @@
   <pre>
   <?php
 
-  query_posts( array('post_type' => array('post', 'product' )  ) );
-  if ( have_posts() ) : while ( have_posts() ) : the_post();
-
-  the_content();
-
-  endwhile;
-  else:
-  endif;
-
+  $myposts = get_posts(array('numberposts' => '1'));
+  foreach( $myposts as $post ){ setup_postdata($post);
+    the_content();
+  }
+  wp_reset_postdata();
   ?>
   </pre>
 

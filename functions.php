@@ -150,12 +150,15 @@ function dsdf()
 		'post' => '',
 	);
 	$pro = new WP_Query($args);
+	echo '<pre>';
 	print_r($pro);
+	echo '</pre>';
 	echo '<br>';
 	if ($pro->have_posts()) {
 		while ($pro->have_posts()) {
 			$pro->the_post();
 			the_ID();
+			the_content();
 			echo '<br>';
 		}
 	}
@@ -165,15 +168,16 @@ function dsdf()
 /* 2 Получить и удалить пост*/
 function ds()
 {
-	$mycustomposts = get_post_types();
-//	$mycustomposts = get_posts();
-//	$mycustomposts = get_post();
-	echo '<pre>';
-	print_r($mycustomposts);
-	echo '</pre>';
+//	$mycustomposts = get_post_types(); // Все пользовательские типы записей
+	$args = array( 'post_type' => 'description_products' ); // post_type - все кастом пост тайп
+	$mycustomposts = get_posts($args); // Все посты
+//	$mycustomposts = get_post(); // Один последний пост
+//	echo '<pre>';
+//	print_r($mycustomposts);
+//	echo '</p/re>';
 	foreach( $mycustomposts as $mypost ) {
 //		wp_delete_post($mypost->ID, true);
-//		echo $mypost->post_content;
+		var_dump( $mypost->post_content);
 //		function pro(){  }
 //		add_shortcode( 'product-'.$mypost->ID, 'pro' );
 	}
@@ -193,7 +197,7 @@ function aa(){
 	echo "<pre>"; print_r($shortcode_tags); echo "</pre>";
 }
 //remove_shortcode('producttt1');
-add_action('wp_footer', 'aa');
+//add_action('wp_footer', 'aa');
 /**
  *	Просмотр и удаление шорткодов
  **/
